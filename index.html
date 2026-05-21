@@ -23,7 +23,42 @@
   <script type="text/babel">
 
     // components here
+function InputSection(props) {
+  return (
+    <div>
+      <label>{props.label}</label>
+      <input type="number" placeholder={props.placeholder} />
+    </div>
+  );
+}
 
+function ConvertButton(props) {
+  return (
+    <button>{props.label}</button>
+  );
+}
+
+function ResultDisplay(props) {
+  return (
+    <div>
+      <label>{props.label}</label>
+      <input type="number" readOnly placeholder="Result will appear here" />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <h1>Currency Converter</h1>
+      <InputSection label="Amount ($)" placeholder="Enter amount" />
+      <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
+      <ConvertButton label="Calculate the exchange" />
+      <ResultDisplay label="Result (€)" />
+    </div>
+  );
+}
+    
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 
   </script>
