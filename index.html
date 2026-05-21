@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Currency Converter</title>
-
   <!-- CDN REACT -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <!-- CDN React DOM - connects React to the HTML page -->
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <!-- Babel - translates JSX so the browser understands -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
 </head>
-
 <body>
-
   <!-- React will inject the entire app inside this div -->
   <div id="root"></div>
-
   <!-- React code goes here -->
   <script type="text/babel">
 
+    const CURRENCIES = [
+      { code: "USD", label: "USD - US Dollar" },
+      { code: "EUR", label: "EUR - Euro" },
+      { code: "GBP", label: "GBP - British Pound" },
+      { code: "JPY", label: "JPY - Japanese Yen" },
+      { code: "CAD", label: "CAD - Canadian Dollar" },
+      { code: "AUD", label: "AUD - Australian Dollar" },
+      { code: "CHF", label: "CHF - Swiss Franc" },
+      { code: "CNY", label: "CNY - Chinese Yuan" },
+      { code: "BRL", label: "BRL - Brazilian Real" },
+      { code: "MXN", label: "MXN - Mexican Peso" },
+    ];
+
+    function CurrencySelector(props) {
+      return (
+        <div>
+          <label>{props.label}</label>
+          <select onChange={props.onChange}>
+            {CURRENCIES.map(function(currency) {
+              return (
+                <option key={currency.code} value={currency.code}>
+                  {currency.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      );
+    }
+
     // components below:
-function InputSection(props) {
-  return (
-    <div>
-      <label>{props.label}</label>
-      <input type="number" placeholder={props.placeholder} />
-    </div>
-  );
-}
-
-function ConvertButton(props) {
-  return (
-    <button>{props.label}</button>
-  );
-}
-
-function ResultDisplay(props) {
-  return (
-    <div>
-      <label>{props.label}</label>
-      <input type="number" readOnly placeholder="Result will appear here" />
-    </div>
-  );
-}
-
-function App() {
-  return (
-    <div>
-      <h1>Currency Converter</h1>
-      <InputSection label="Amount ($)" placeholder="Enter amount" />
-      <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
-      <ConvertButton label="Calculate the exchange" />
-      <ResultDisplay label="Result (€)" />
-    </div>
-  );
-}
+    function InputSection(props) {
+      return (
+        <div>
+          <label>{props.label} </label>
+          <span>{props.currency} </span><input type="number" placeholder={props.placeholder} />
+        </div>
+      );
+    }
+    function ConvertButton(props) {
+      return (
+        <button>{props.label}</button>
+      );
+    }
+    function ResultDisplay(props) {
+      return (
+        <div>
+          <label>{props.label} </label>
+          <span>{props.currency} </span><input type="number" readOnly placeholder="Result will appear here" />
+        </div>
+      );
+    }
+    function App() {
+      const [fromCurrency, setFromCurrency] = React.useState("USD");
+      const [toCurrency, setToCurrency] = React.useState("USD");
+      return (
+        <div>
+          <h1>Currency Converter</h1>
+          <CurrencySelector label="From" onChange={function(e) { setFromCurrency(e.target.value); }} />
+          <CurrencySelector label="To" onChange={function(e) { setToCurrency(e.target.value); }} />
+          <InputSection label="Amount" placeholder="Enter amount to convert" currency={fromCurrency} />
+          <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
+          <ConvertButton label="Convert" />
+          <ResultDisplay label="Result" currency={toCurrency} />
+        </div>
+      );
+    }
     
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-
   </script>
-
 </body>
 </html>
