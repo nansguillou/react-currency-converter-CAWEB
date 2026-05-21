@@ -21,13 +21,42 @@
 
   <!-- React code goes here -->
   <script type="text/babel">
+    
+    const CURRENCIES = [
+      { code: "USD", label: "USD - US Dollar" },
+      { code: "EUR", label: "EUR - Euro" },
+      { code: "GBP", label: "GBP - British Pound" },
+      { code: "JPY", label: "JPY - Japanese Yen" },
+      { code: "CAD", label: "CAD - Canadian Dollar" },
+      { code: "AUD", label: "AUD - Australian Dollar" },
+      { code: "CHF", label: "CHF - Swiss Franc" },
+      { code: "CNY", label: "CNY - Chinese Yuan" },
+      { code: "BRL", label: "BRL - Brazilian Real" },
+      { code: "MXN", label: "MXN - Mexican Peso" },
+    ];
+
+    function CurrencySelector(props) {
+      return (
+        <div>
+          <label>{props.label}</label>
+          <select>
+            {CURRENCIES.map(function(currency) {
+              return (
+                <option key={currency.code} value={currency.code}>
+                  {currency.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      );
+    }
 
     // components below:
 function InputSection(props) {
   return (
     <div>
       <label>{props.label}</label>
-      <input type="number" placeholder={props.placeholder} />
     </div>
   );
 }
@@ -51,10 +80,10 @@ function App() {
   return (
     <div>
       <h1>Currency Converter</h1>
-      <InputSection label="Amount ($)" placeholder="Enter amount" />
+      <InputSection label="Amount" placeholder="Enter amount to convert" />
       <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
       <ConvertButton label="Calculate the exchange" />
-      <ResultDisplay label="Result (€)" />
+      <ResultDisplay label="Result" />
     </div>
   );
 }
