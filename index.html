@@ -1,24 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Currency Converter</title>
-
   <!-- CDN REACT -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <!-- CDN React DOM - connects React to the HTML page -->
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <!-- Babel - translates JSX so the browser understands -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
 
+  <style>
+
+    body {
+      background: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .card {
+      width: min(460px, 90%);
+      background: #ffffff;
+      padding: 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.4rem;
+      color: #374151;
+      margin: 0;
+    }
+
+    /* From and To selectors side by side */
+    .currency-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .currency-selector {
+      width: 50%;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+      outline: none;
+      box-sizing: border-box;
+      color: #374151;
+    }
+
+    input:focus, select:focus {
+      border-color: #a78bfa;
+    }
+
+    /* Result field is read-only */
+    input[readonly] {
+      background: #f9fafb;
+      color: #6b7280;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #a78bfa;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #8b5cf6;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+  </style>
 </head>
-
 <body>
-
   <!-- React will inject the entire app inside this div -->
   <div id="root"></div>
-
   <!-- React code goes here -->
   <script type="text/babel">
     
@@ -37,7 +123,7 @@
 
     function CurrencySelector(props) {
       return (
-        <div>
+        <div className="currency-selector">
           <label>{props.label}</label>
           <select>
             {CURRENCIES.map(function(currency) {
@@ -53,46 +139,47 @@
     }
 
     // components below:
-function InputSection(props) {
-  return (
-    <div>
-      <label>{props.label}</label>
-      <input type="number" placeholder={props.placeholder} />
-    </div>
-  );
-}
+    function InputSection(props) {
+      return (
+        <div>
+          <label>{props.label}</label>
+          <input type="number" placeholder={props.placeholder} />
+        </div>
+      );
+    }
 
-function ConvertButton(props) {
-  return (
-    <button>{props.label}</button>
-  );
-}
+    function ConvertButton(props) {
+      return (
+        <button>{props.label}</button>
+      );
+    }
 
-function ResultDisplay(props) {
-  return (
-    <div>
-      <label>{props.label}</label>
-      <input type="number" readOnly placeholder="Result will appear here" />
-    </div>
-  );
-}
+    function ResultDisplay(props) {
+      return (
+        <div>
+          <label>{props.label}</label>
+          <input type="number" readOnly placeholder="Result will appear here" />
+        </div>
+      );
+    }
 
-function App() {
-  return (
-    <div>
-      <h1>Currency Converter</h1>
-        <CurrencySelector label="Select currency" />
-        <InputSection label="Amount" placeholder="Enter amount to convert" />
-        <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
-        <ConvertButton label="Convert" />
-        <ResultDisplay label="Result" />
-    </div>
-  );
-}
+    function App() {
+      return (
+        <div className="card">
+          <h1>Currency Converter</h1>
+          <div className="currency-row">
+            <CurrencySelector label="From" />
+            <CurrencySelector label="To" />
+          </div>
+          <InputSection label="Amount" placeholder="Enter amount to convert" />
+          <InputSection label="Exchange rate" placeholder="Enter exchange rate" />
+          <ConvertButton label="Convert" />
+          <ResultDisplay label="Result" />
+        </div>
+      );
+    }
     
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-
   </script>
-
 </body>
 </html>
